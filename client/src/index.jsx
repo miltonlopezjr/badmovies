@@ -18,13 +18,32 @@ class App extends React.Component {
     this.deleteMovie = this.deleteMovie.bind(this);
     this.swapFavorites = this.swapFavorites.bind(this);
     this.setMovies = this.setMovies.bind(this);
+    this.getFavs = this.getFavs.bind(this);
+    this.setFavs = this.setFavs.bind(this);
   }
   componentDidMount(){
+    this.getFavs();
   }
   setMovies(movies){
+    console.log(movies)
     this.setState({
       movies: movies
     })
+  }
+  setFavs(movies){
+    console.log(movies)
+    this.setState({
+      favorites: movies
+    })
+  }
+  getFavs(){
+    axois.get('/movies/favorites')
+      .then(({data}) => {
+        this.setFavs(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
   }
   getMovies(genre) {
     axois.get('/movies/search', {
@@ -45,7 +64,7 @@ class App extends React.Component {
       movie: movie
     })
       .then(({data}) => {
-        console.log(data);
+        this.getFavs();
       })
       .catch((err) => {
         console.log(err);
@@ -53,10 +72,12 @@ class App extends React.Component {
   }
   deleteMovie(movie) {
     axois.delete('/movies/delete', {
-      movie: movie
+      params : {
+        movieId: movie.id
+      }
     })
       .then(({data}) => {
-        console.log(data);
+        this.getFavs();
       })
       .catch((err) => {
         console.log(err);

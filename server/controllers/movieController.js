@@ -42,12 +42,31 @@ module.exports = {
       });
   },
   saveMovie: (req, res) => {
-    res.send('hi saveMovie');
-
-
+    let movie = req.body.movie;
+    movieModel.save(movie, (err, data) => {
+      if(err) {
+        res.send(err);
+      } else {
+        res.send(data);
+      }
+    })
   },
   deleteMovie: (req, res) => {
-    res.send('hi deleteMovie');
-
+    movieModel.delete(req.query.movieId, (err, response) => {
+      if(err) {
+        res.send(err);
+      } else {
+        res.send(response);
+      }
+    })
+  },
+  getMovies : (req, res) => {
+    movieModel.fetch((err, response) => {
+      if(err) {
+        res.send(err);
+      } else {
+        res.send(response);
+      }
+    })
   }
 }

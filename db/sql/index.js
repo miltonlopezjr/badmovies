@@ -1,4 +1,10 @@
-const mysql = require('mysql');
-const mysqlConfig = require('../../config.js');
+var mysql = require('mysql');
 
-const connection = mysql.createConnection(mysqlConfig);
+var connection = mysql.createConnection({
+  host  : process.env.HOST,
+  user  : 'student',
+  password : 'student',
+  database : process.env.DATABASE,
+});
+
+module.exports.connection = connection;

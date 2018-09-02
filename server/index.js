@@ -2,7 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const path = require('path');
-const config = require('dotenv').config()
+const config = require('dotenv').config();
+const db = require('../db/sql/index')
+
 
 //Helpers
 const apiHelpers = require('./helpers/apiHelpers.js');
