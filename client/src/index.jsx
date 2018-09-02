@@ -13,20 +13,51 @@ class App extends React.Component {
       favorites: [{deway: "favorites"}],
       showFaves: false,
     };
-    
-    // you might have to do something important here!
+    this.getMovies = this.getMovies.bind(this);
+    this.saveMovie = this.saveMovie.bind(this);
+    this.deleteMovie = this.deleteMovie.bind(this);
+    this.swapFavorites = this.swapFavorites.bind(this);
+  }
+
+  componentDidMount(){
+
   }
 
   getMovies() {
     // make an axios request to your server on the GET SEARCH endpoint
+    axois.get('/movies/search')
+      .then(({data}) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
   }
 
   saveMovie() {
     // same as above but do something diff
+    axois.post('/movies/save', {
+      name: 'new name'
+    })
+      .then(({data}) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
   }
 
   deleteMovie() {
     // same as above but do something diff
+    axois.delete('/movies/delete', {
+      name: 'new name'
+    })
+      .then(({data}) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
   }
 
   swapFavorites() {
