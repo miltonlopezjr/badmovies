@@ -5,13 +5,17 @@ class Search extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      genres: []
+      genres: [],
+      selectedGenreId : ''
     };
     this.getGenres = this.getGenres.bind(this);
     this.setGenres = this.setGenres.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
+    this.handleSelectChange = this.handleSelectChange.bind(this);
   }
   componentDidMount (){
     this.getGenres();
+    this.props.getMovies(this.state.selectedGenre);
   }
   getGenres() {
     axios.get('/movies/genres')
@@ -24,7 +28,16 @@ class Search extends React.Component {
   }
   setGenres(genres) {
     this.setState({
-      genres: genres
+      genres: genres,
+      selectedGenreId: genres[0].id
+    })
+  }
+  handleSearch(evt) {
+    this.props.getMovies(this.state.selectedGenre);
+  }
+  handleSelectChange(evt){
+    this.setState({
+      selectedGenre: evt.target.value
     })
   }
 
@@ -33,13 +46,12 @@ class Search extends React.Component {
       <div className="search">
         <button onClick={() => {this.props.swapFavorites()}}>{this.props.showFaves ? "Show Results" : "Show Favorites"}</button>
         <br/><br/>
-        {/* How can you tell which option has been selected from here? */}
-        <select>
-          {this.state.genres.map((genre) => (<option key={genre.id} value={genre.name}>{genre.name}</option>)
+        <select onChange={this.handleSelectChange}>
+          {this.state.genres.map((genre) => (<option key={genre.id} value={genre.id}>{genre.name}</option>)
           )}
         </select>
         <br/><br/>
-        <button>Search</button>
+        <button onClick={this.handleSearch}>Search</button>
       </div>
     );
   }

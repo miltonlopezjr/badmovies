@@ -1,9 +1,9 @@
 import React from 'react';
+import moment from 'moment';
 
 class Movies extends React.Component {
   constructor(props) {
-    super(props)
-
+    super(props);
   }
 
   // Make an onClick for each list item. If the movies shown is the search results, 
@@ -15,12 +15,27 @@ class Movies extends React.Component {
   render() {
     return (
       <ul className="movies">
+        {this.props.movies.map((movie) => (
+          <li key={movie.id} className="movie_item" onClick={this.props.showFaves ? () => {this.props.deleteMovie(movie)} : () => {this.props.saveMovie(movie)}} >
+            <img src="" />
+            <div className="movie_description">
+              <h2>{movie.original_title}</h2>
+              <section className="movie_details">
+                <div className="movie_year">
+                  <span className="title">Year</span>
+                  <span>{movie.release_date ? moment(movie.release_date).year() : ''}</span>
+                </div>
+                <div className="movie_rating">
+                  <span className="title">Rating</span>
+                  <span>{movie.popularity}</span>
+                </div>
+              </section>
+            </div>
+          </li>
+        )
+        )}
 
-
-        {/* Make this list dynamic! */}
-
-
-        <li className="movie_item">
+        {/* <li className="movie_item">
           <img src="https://lh3.googleusercontent.com/97gnjRiv2zIRnDupzfxYFoI-6zlIK3jKgb6KOCDf_tjWkY9epbITdSFIbiKhuccOqQ=w300" />
           <div className="movie_description">
             <h2>De Wae</h2>
@@ -163,7 +178,7 @@ class Movies extends React.Component {
               </div>
             </section>
           </div>
-        </li>
+        </li> */}
 
       </ul>
     );
